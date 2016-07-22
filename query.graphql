@@ -1,13 +1,13 @@
 {
   repo(path: "/Users/mtilley/github/github") {
-    path,
     refs {
-      name,
       commit {
         sha,
-        author {
-          name,
-          email
+        parents {
+          sha
+          parents {
+            sha
+          }
         }
       }
     }

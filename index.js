@@ -24,7 +24,7 @@ class Commit {
   }
 
   get parents () {
-    return this._data.then(d => d.parents)
+    return this._data.then(d => d.parents.map(sha => new Commit(this.repo, sha)))
   }
 
   get tree () {
@@ -84,14 +84,14 @@ var userType = new graphql.GraphQLObjectType({
 
 var commitType = new graphql.GraphQLObjectType({
   name: 'Commit',
-  fields: {
+  fields: () => ({
     sha: { type: graphql.GraphQLString },
     tree: { type: graphql.GraphQLString },
-    parents: { type: new graphql.GraphQLList(graphql.GraphQLString) },
+    parents: { type: new graphql.GraphQLList(commitType) },
     message: { type: graphql.GraphQLString },
     author: { type: userType },
     committer: { type: userType },
-  }
+  })
 })
 
 var refType = new graphql.GraphQLObjectType({
